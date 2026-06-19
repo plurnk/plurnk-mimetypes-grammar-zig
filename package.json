@@ -1,6 +1,6 @@
 {
     "name": "@plurnk/plurnk-mimetypes-grammar-zig",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "Pre-built tree-sitter-zig WASM grammar for @plurnk/plurnk-mimetypes.",
     "type": "module",
     "license": "MIT",
