@@ -25,7 +25,9 @@
     ],
     "scripts": {
         "build:wasm": "node scripts/build-wasm.mjs",
-        "verify:wasm": "node scripts/verify-wasm.mjs"
+        "verify:wasm": "node scripts/verify-wasm.mjs",
+        "update:pin": "node scripts/update-pin.mjs",
+        "update": "npm run update:pin && npm run build:wasm && npm run verify:wasm"
     },
     "peerDependencies": {
         "@plurnk/plurnk-mimetypes": ">=0.11.0",
