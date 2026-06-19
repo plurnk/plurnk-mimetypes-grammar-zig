@@ -4,6 +4,9 @@ name: update-grammar
 # Weekly: check upstream tags; if a newer release exists, advance .grammar-pin,
 # rebuild + verify the WASM, and open a PR. Publishing the bumped package stays
 # a manual, human-gated step (OTP) — this only proposes the change.
+#
+# No third-party actions: GitHub-official actions only, the official
+# emscripten-core/emsdk installed directly, and `gh` for the PR.
 on:
   schedule:
     - cron: "17 6 * * 1" # Mondays 06:17 UTC
@@ -33,30 +36,28 @@ jobs:
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Set up emscripten (for tree-sitter build --wasm)
-        if: steps.bump.outputs.changed == 'true'
-        uses: mymindstorm/setup-emsdk@v14
-
-      - name: Rebuild + verify WASM from the new pin
+      - name: Rebuild + verify WASM (official emscripten-core/emsdk)
         if: steps.bump.outputs.changed == 'true'
         run: |
+          git clone --depth 1 https://github.com/emscripten-core/emsdk.git "$RUNNER_TEMP/emsdk"
+          "$RUNNER_TEMP/emsdk/emsdk" install latest
+          "$RUNNER_TEMP/emsdk/emsdk" activate latest
+          source "$RUNNER_TEMP/emsdk/emsdk_env.sh"
           npm run build:wasm
           npm run verify:wasm
 
-      - name: Open PR
+      - name: Open PR (gh)
         if: steps.bump.outputs.changed == 'true'
-        uses: peter-evans/create-pull-request@v6
-        with:
-          branch: grammar-update
-          base: main
-          title: "chore: advance grammar pin to upstream latest release"
-          commit-message: "chore: advance grammar pin + rebuild wasm to upstream latest"
-          body: |
-            Automated grammar update: upstream published a newer stable release tag.
-
-            - `.grammar-pin` advanced to the latest release commit
-            - WASM rebuilt from the new pin and `verify:wasm` confirmed reproducible
-
-            Review the diff, then publish manually (OTP) per the family convention.
-          labels: grammar-update
-          delete-branch: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B grammar-update
+          git add .grammar-pin ./*.wasm
+          git commit -m "chore: advance grammar pin + rebuild wasm to upstream latest"
+          git push -f origin grammar-update
+          gh pr create --base main --head grammar-update \
+            --title "chore: advance grammar pin to upstream latest release" \
+            --body "Automated grammar update: upstream published a newer stable release tag. \`.grammar-pin\` advanced to the latest release commit; WASM rebuilt from the new pin and \`verify:wasm\` confirmed reproducible. Review the diff, then publish manually (OTP)." \
+            2>/dev/null || echo "PR already open for grammar-update (updated via force-push)"
