@@ -1,6 +1,6 @@
 {
     "name": "@plurnk/plurnk-mimetypes-grammar-zig",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "description": "Pre-built tree-sitter-zig WASM grammar for @plurnk/plurnk-mimetypes.",
     "type": "module",
     "license": "MIT",
@@ -30,7 +30,7 @@
         "update": "npm run update:pin && npm run build:wasm && npm run verify:wasm"
     },
     "peerDependencies": {
-        "@plurnk/plurnk-mimetypes": "^0.16.0",
+        "@plurnk/plurnk-mimetypes": ">=0.16.0",
         "web-tree-sitter": "^0.25.0 || ^0.26.0"
     }
 }
