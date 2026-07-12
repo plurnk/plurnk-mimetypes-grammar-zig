@@ -30,7 +30,7 @@
         "update": "npm run update:pin && npm run build:wasm && npm run verify:wasm"
     },
     "peerDependencies": {
-        "@plurnk/plurnk-mimetypes": ">=0.16.0",
+        "@plurnk/plurnk-mimetypes": "^1",
         "web-tree-sitter": "^0.25.0 || ^0.26.0"
     }
 }
