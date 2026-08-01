@@ -7,13 +7,14 @@ independently published `@plurnk/plurnk-mimetypes-grammar-zig` package.
 ## Contract ownership
 
 This repository owns one pre-built tree-sitter WASM grammar package: the
-upstream source pin, deterministic build and verification scripts, checked-in
-WASM artifact, package metadata, and release history. It does not own the
-general mimetype framework.
+upstream source locator and pin, deterministic build and verification scripts,
+checked-in WASM artifact, package metadata, and release history. It does not own
+the general mimetype framework.
 
 The consuming framework contract and grammar-loading behavior are owned by
-`../plurnk-service/plurnk-mimetypes/SPEC.md`. A change that applies across
-grammar packages starts there and is then consumed here; do not add a
+`../plurnk-service/plurnk-mimetypes/SPEC.md`; grammar build and verification
+follow its `{§grammar-leaf-reproducibility}` contract. A change that applies
+across grammar packages starts there and is then consumed here; do not add a
 package-local alternative to the framework.
 
 Keep the peer range and `plurnk.builtAgainst` declaration coherent with the
