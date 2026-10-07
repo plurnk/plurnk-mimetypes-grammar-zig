@@ -1,6 +1,6 @@
 {
     "name": "@plurnk/plurnk-mimetypes-grammar-zig",
-    "version": "1.16.2",
+    "version": "2.0.0",
     "description": "Pre-built tree-sitter-zig WASM grammar for @plurnk/plurnk-mimetypes.",
     "type": "module",
     "license": "MIT",
@@ -28,7 +28,8 @@
         "build:wasm": "node scripts/build-wasm.mjs",
         "verify:wasm": "node scripts/verify-wasm.mjs",
         "update:pin": "node scripts/update-pin.mjs",
-        "update": "npm run update:pin && npm run build:wasm && npm run verify:wasm"
+        "update": "npm run update:pin && npm run build:wasm && npm run verify:wasm",
+        "test": "npm run verify:wasm"
     },
     "devDependencies": {
         "tree-sitter-cli": "0.27.0"
@@ -37,10 +38,11 @@
         "tree-sitter-cli@0.27.0": true
     },
     "peerDependencies": {
-        "@plurnk/plurnk-mimetypes": "^1.16.1",
         "web-tree-sitter": "^0.25.0 || ^0.26.0 || ^0.27.0"
     },
-    "plurnk": {
-        "builtAgainst": "1.16.1"
-    }
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/plurnk/plurnk-mimetypes-grammar-zig.git"
+    },
+    "homepage": "https://github.com/plurnk/plurnk-mimetypes-grammar-zig#readme"
 }

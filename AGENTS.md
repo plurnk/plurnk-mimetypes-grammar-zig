@@ -13,13 +13,14 @@ the general mimetype framework.
 
 The consuming framework contract and grammar-loading behavior are owned by
 `../plurnk-service/plurnk-mimetypes/SPEC.md`; grammar build and verification
-follow its `{§grammar-leaf-reproducibility}` contract. A change that applies
+follow its `{§grammar-package-reproducibility}` contract. A change that applies
 across grammar packages starts there and is then consumed here; do not add a
 package-local alternative to the framework.
 
-Keep the peer range and `plurnk.builtAgainst` declaration coherent with the
-framework release the artifact actually supports. Preserve the independent
-package boundary and publication history.
+Declare compatibility through named peer dependency ranges and retain exact
+installed versions as test evidence. This package versions independently under
+SemVer; an unchanged compatible consumer does not release to match a framework
+number. Preserve the independent package boundary and publication history.
 
 ## Development
 
